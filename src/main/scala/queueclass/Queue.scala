@@ -1,6 +1,6 @@
 package queueclass
 
-class Queue[T] private (
+class Queue[+T] private (
                        private val leading: List[T],
                        private val trailing: List[T]
                        ) {
@@ -10,14 +10,14 @@ class Queue[T] private (
     else
       this
 
-  def head: T= mirror.leading.head
+  def head: T = mirror.leading.head
 
   def tail: Queue[T] = {
     val q = mirror
     new Queue(q.leading.tail, q.trailing)
   }
 
-  def enqueue(x: T): Queue[T] =
+  def enqueue[U >: T](x: U): Queue[U] =
     new Queue(leading, x :: trailing)
 }
 
