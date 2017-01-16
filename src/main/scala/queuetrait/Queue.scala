@@ -1,9 +1,9 @@
 package queuetrait
 
-trait Queue[T] {
+trait Queue[+T] {
   def head: T
   def tail: Queue[T]
-  def enqueue(x: T): Queue[T]
+  def enqueue[U >: T](x: U): Queue[U]
 }
 
 object Queue {
@@ -11,7 +11,7 @@ object Queue {
   def apply[T](xs: T*): Queue[T] =
     new QueueImpl[T](xs.toList, Nil)
 
-  private class QueueImpl[T](
+  private class QueueImpl[+T](
                             private val leading: List[T],
                             private val trailing: List[T]
                             ) extends Queue[T] {
@@ -29,7 +29,7 @@ object Queue {
       new QueueImpl(q.leading.tail, q.trailing)
     }
 
-    def enqueue(x: T): QueueImpl[T] =
+    def enqueue[U >: T](x: U): QueueImpl[U] =
       new QueueImpl(leading, x :: trailing)
   }
 }
