@@ -1,20 +1,25 @@
 package queueclass
 
 class Queue[+T] private (
-                       private val leading: List[T],
-                       private val trailing: List[T]
+                       private[this] var leading: List[T],
+                       private[this] var trailing: List[T]
                        ) {
-  private def mirror =
-    if (leading.isEmpty)
-      new Queue(trailing.reverse, Nil)
-    else
-      this
+  private def mirror(): Unit =
+    if (leading.isEmpty) {
+      while (trailing.nonEmpty) {
+        leading = trailing.head :: leading
+        trailing = trailing.tail
+      }
+    }
 
-  def head: T = mirror.leading.head
+  def head: T = {
+    mirror()
+    leading.head
+  }
 
   def tail: Queue[T] = {
-    val q = mirror
-    new Queue(q.leading.tail, q.trailing)
+    mirror()
+    new Queue(leading.tail, trailing)
   }
 
   def enqueue[U >: T](x: U): Queue[U] =
