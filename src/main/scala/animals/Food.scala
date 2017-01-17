@@ -1,0 +1,3 @@
+package animals
+
+class Food
