@@ -1,7 +1,7 @@
 package extractors
 
 object ExpandedEmail {
-  def unapply(email: String): Option[(String, Seq[String])] = {
+  def unapplySeq(email: String): Option[(String, Seq[String])] = {
     val parts = email split "@"
     if (parts.length == 2)
       Some(parts(0), parts(1).split("\\.").reverse)
