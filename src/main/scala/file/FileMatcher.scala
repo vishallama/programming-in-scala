@@ -3,7 +3,7 @@ package file
 import java.io.File
 
 object FileMatcher {
-  private def filesHere = new File(".").listFiles()
+  private def filesHere: Array[File] = new File(".").listFiles()
 
   def filesEnding(query: String): Array[File] =
     filesMatching(_.endsWith(query))
@@ -14,7 +14,7 @@ object FileMatcher {
   def filesRegex(query: String): Array[File] =
     filesMatching(_.matches(query))
 
-  private def filesMatching(matcher: String => Boolean) = {
+  private def filesMatching(matcher: String => Boolean): Array[File] = {
     for (file <- filesHere; if matcher(file.getName))
       yield file
   }
