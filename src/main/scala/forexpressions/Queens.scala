@@ -6,6 +6,7 @@ object Queens {
     println("Solution for 2x2:\n" + queens(2) + "\n")
     println("Solution for 3x3:\n" + queens(3) + "\n")
     println("Solution for 4x4:\n" + queens(4) + "\n")
+    println("Solution for 5x5:\n" + queens(5) + "\n")
   }
 
   def queens(n: Int): List[List[(Int, Int)]] = {
@@ -25,7 +26,7 @@ object Queens {
     queens.forall (q => !inCheck(queen, q))
 
   private def inCheck(q1: (Int, Int), q2: (Int, Int)) =
-    q1._1 == q2._2 ||   // same row
+    q1._1 == q2._1 ||   // same row
     q1._2 == q2._2 ||   // same column
     (q1._1 - q2._1).abs == (q1._2 - q2._2).abs  // on diagonal
 }
